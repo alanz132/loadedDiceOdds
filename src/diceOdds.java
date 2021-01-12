@@ -2,7 +2,9 @@ import java.util.*;
 
 public class diceOdds {
 
-  static boolean verbose = true;
+  // change this to true if you want more details
+  // static boolean verbose = true;
+  static boolean verbose = false;
 
   static class Unit {
     String name;
@@ -162,7 +164,6 @@ public class diceOdds {
             potentialUnits.add(traitUnit.name);
           }
           int[] potentialUnitsRerolled = getCostsOfPotentialRerolled(traitUnit);
-          //System.out.println("Using dice on " + traitUnit.name);
           for (int i = 3; i < 9; i++) {
             double[] levelOdds = odds[i];
             double num = 0;
