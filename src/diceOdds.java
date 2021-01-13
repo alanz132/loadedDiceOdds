@@ -4,7 +4,7 @@ public class diceOdds {
 
   // change this to true if you want more details
   // static boolean verbose = true;
-  static boolean verbose = false;
+  static boolean verbose = true;
 
   static class Unit {
     String name;
@@ -146,8 +146,8 @@ public class diceOdds {
     initializeTraits();
     // for each unit
     for (Unit targetUnit : list_of_units) {
-      PriorityQueue<Entry>[] rerollingOdds = new PriorityQueue[6];
-      for (int i = 0; i < 6; i++) {
+      PriorityQueue<Entry>[] rerollingOdds = new PriorityQueue[7];
+      for (int i = 0; i < 7; i++) {
         rerollingOdds[i] = new PriorityQueue<Entry>();
       }
       HashSet<String> potentialUnits = new HashSet<>();
@@ -164,7 +164,7 @@ public class diceOdds {
             potentialUnits.add(traitUnit.name);
           }
           int[] potentialUnitsRerolled = getCostsOfPotentialRerolled(traitUnit);
-          for (int i = 3; i < 9; i++) {
+          for (int i = 2; i < 9; i++) {
             double[] levelOdds = odds[i];
             double num = 0;
             double den = 0;
@@ -177,22 +177,23 @@ public class diceOdds {
               }
             }
             Entry entry = new Entry(num / den, traitUnit.name);
-            rerollingOdds[i - 3].add(entry);
+            rerollingOdds[i - 2].add(entry);
           }
         }
       }
-      for (int i = 0; i < 6; i++) {
+      for (int i = 0; i < 7; i++) {
         if (verbose) {
           printAll(rerollingOdds, i);
         } else {
           print(rerollingOdds, i);
         }
       }
+      System.out.println();
     }
   }
 
   public static void print(PriorityQueue<Entry>[] arr, int level) {
-    System.out.print("At level " + (level + 4) + " you should use it on ");
+    System.out.print("At level " + (level + 3) + " you should use it on ");
     PriorityQueue<Entry> odds = arr[level];
 
     Entry best = odds.poll();
@@ -210,7 +211,8 @@ public class diceOdds {
   }
 
   public static void printAll(PriorityQueue<Entry>[] arr, int level) {
-    System.out.println("At level " + (level + 4));
+    System.out.println("\n At level " + (level + 3));
+    System.out.println();
     PriorityQueue<Entry> odds = arr[level];
     if (odds.peek().odds == 0) {
       System.out.println("You can't hit");
